@@ -22,7 +22,7 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - name: Install deps & build
+      - name: Build site
         run: |
           bundle install
           JEKYLL_ENV=production bundle exec jekyll build --trace
