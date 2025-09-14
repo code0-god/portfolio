@@ -1,0 +1,9 @@
+{% if page.updates %}
+<h2 class="project-updates">Updates</h2>
+<ul>
+  {% assign sorted = page.updates | sort: "date" | reverse %}
+  {% for item in sorted %}
+    <li><strong>{{ item.date }}:</strong> {{ item.text }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
