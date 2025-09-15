@@ -1,14 +1,9 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - code0-god
 
 repo_description_lines_max: 2
 
 github_repos:
-  - alshedivat/al-folio
-  - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  - code0-god/code.GAP
+  - code0-god/code0-god.github.io
+  - code0-god/Cistory

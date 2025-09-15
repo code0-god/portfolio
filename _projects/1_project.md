@@ -1,81 +1,96 @@
 ---
 layout: page
-title: project 1
-description: with background image
-img: assets/img/12.jpg
+title: code.GAP
+description: "Experimenting with GEMV acceleration — from CPU baselines to hardware co-design."
+img: assets/img/12.jpg # 프로젝트 카드에 표시될 배경 이미지
 importance: 1
-category: work
-related_publications: true
+category: Research
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
-
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
-
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
-
 <div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    <div class="col-sm-12">
+        {% include figure.liquid loading="eager" path="assets/img/gap_overview.jpg" title="Project Overview Image" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    A conceptual diagram of the code.GAP project, showing the progression from software kernels to an FPGA-based hardware accelerator. 
     </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
 
-You can also put regular text between your rows of images, even citations {% cite einstein1950meaning %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+## **Overview**
+
+`code.GAP` is a **practice-oriented project** for exploring **GEMV (General Matrix-Vector Multiplication)** acceleration. It is designed both as a **learning companion for computer architecture courses** and as a **foundation for accelerator co-design experiments** involving quantization, sparsity, and custom hardware.
+
+The project focuses on:
+- Building a reproducible **software/hardware stack** for performance analysis based on the Roofline model.
+- Evaluating the impact of modern acceleration techniques like **quantization** (INT8) and **structured sparsity** (2:4).
+- Understanding design trade-offs between **CPU baselines, tiled kernels, and systolic-array models**.
+- Producing benchmarks and correctness tests for **portfolio and research use**.
+
+---
+
+## **Layered Architecture**
+
+The project is designed around a "Contract"-based architecture to ensure a clean separation of concerns between layers. This modular design allows for independent development and testing of the tensor library, backend implementations, and GEMV algorithms.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/gap_architecture.jpg" title="Layered Architecture Diagram" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        <h3 class="mt-0">Core Layers</h3>
+        <ul>
+            <li><strong>Core:</strong> Defines the central contracts (data types, compute policies) and the abstract `IBackend` interface.</li>
+            <li><strong>Tensor:</strong> A user-friendly handle for managing data and metadata.</li>
+            <li><strong>Backend:</strong> A resource provider for memory operations and optional accelerated kernels (e.g., NEON, AVX, FPGA).</li>
+            <li><strong>Algorithm:</strong> The GEMV dispatcher that selects an appropriate backend or falls back to a reference software kernel.</li>
+        </ul>
     </div>
 </div>
 <div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
+    A visual representation of the project's layered architecture, highlighting the separation between interfaces and implementations.
 </div>
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+
+---
+
+## **Project Roadmap**
+
+The project is structured in four sequential phases, progressing from fundamental software concepts to a final hardware implementation.
+
+1.  **Phase 1: Software Kernels (Practice)**
+    - Implement baseline GEMV kernels (Naive, Tiled/Blocking) in pure software to establish correctness and a performance reference.
+
+2.  **Phase 2: CPU Optimization**
+    - Develop CPU-specific backends using SIMD intrinsics (Arm NEON, x86 AVX) to optimize the software kernels.
+
+3.  **Phase 3: Accelerator Modeling**
+    - Build a cycle-approximate software model of a systolic array to understand its dataflow and performance characteristics without designing hardware.
+
+4.  **Phase 4: FPGA Co-Design (Hardware)**
+    - Design, implement, and verify a complete **INT8, 8x8 Output-Stationary Systolic Array** accelerator on an FPGA, managed by an AXI-based host interface.
+
+---
+
+## **Build & Run**
+
+The project includes a simple build script and a command-line benchmark runner for standardized testing.
+
+Below is an example of running an INT8 benchmark with 2:4 structured sparsity.
 
 {% raw %}
+```bash
+# Build the project (default: cpu.scalar backend)
+bash scripts/build.sh
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
+# Run an INT8 benchmark with 2:4 structured sparsity
+./build/gap_app --backend=cpu.scalar --kernel=sw.tiled \
+    --dtype=i8 --math=Int8xInt8_To_Int32 --sparsity=block2_4 \
+    --M=4096 --N=4096 --runs=30 --warmup=5
 ```
-
 {% endraw %}
+
+<div class="text-center mt-4">
+<a class="btn btn-primary btn-lg" href="https://github.com/code0-god/code.GAP" role="button" target="_blank">
+<i class="fab fa-github"></i> View on GitHub
+</a>
+</div>

@@ -1,34 +1,60 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: Undergraduate Research Intern | Computer Architecture & AI Acceleration
 
 profile:
   align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image: me.webp
+  image_circular: false
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p> - 3rd Year, Electrical & Computer Engineering</p>
+    <p> - Embedded & AI Systems Laboratory</p>
+    <p> - Ajou University, Suwon, South Korea</p>
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
-
-announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
-
-latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+news: false
+selected_papers: false
+social: true 
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I'm a third-year undergraduate student at Ajou University, deeply fascinated by **computer architecture** and **AI acceleration**. As a research intern in the Embedded and AI Systems Laboratory, I'm exploring how **HW/SW co-design** can unlock the potential of deep learning systems on specialized hardware.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My journey into this field began with Computer Systems Programming, where I became fascinated with the low-level world of how software commands orchestrate hardware. This experience sparked a deep interest in pushing performance to its limits at the hardware-software boundary. Now, as a research intern, my hands-on work in performance optimization has solidified that passion.   
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+This experience has convinced me that exploring custom accelerator design could be key to achieving better system-level efficiency
+
+
+
+## **Current Research**
+
+I'm currently working on **HW/SW optimization for Dynamic DNNs**, where I'm learning to port and optimize the **RISC-V Gemmini systolic array accelerator** within CPU-based runtimes like `llama.cpp`. This challenging project has taught me about the complexities of bridging specialized hardware and software frameworks through deep performance profiling and analysis.
+
+I've also initiated the **GAP (GEMV Accelerator Project)**, a personal research endeavor where I'm systematically exploring GEMV (General Matrix-Vector Multiplication) acceleration. Starting from baseline software kernels, I'm progressing through SIMD-optimized CPU backends toward a final hardware implementation of an **INT8 systolic array on an FPGA**.
+
+---
+
+## **Research Interests & Learning Goals**
+
+- **Hardware/Software Co-design**: Understanding how to optimize AI workloads across the full stack
+- **Computer Architecture**: Exploring RISC-V ecosystems, systolic arrays, and memory hierarchies  
+- **ML Acceleration**: Learning about quantization, sparsity, and specialized computing architectures
+- **Edge AI Systems**: Investigating efficient deployment of neural networks on resource-constrained devices
+
+---
+
+## **Technical Skills**
+
+- **Languages:** C/C++ (C++20), Python
+- **Core Concepts:** Computer Architecture, Dynamic DNNs, Low-Level Optimization, Performance Profiling
+- **Tools & Platforms:** llama.cpp/ggml, GDB, `perf`, CMake, Git, FPGA development (learning)
+
+---
+
+## **Future Aspirations**
+
+I'm planning to pursue graduate studies in computer architecture, with a focus on specialized computing systems for AI workloads. My goal is to contribute to the development of next-generation architectures that can efficiently handle the growing computational demands of AI applications.
+
+---
+
+*I'm always eager to learn more and discuss research ideas. Feel free to reach out if you'd like to connect!*
