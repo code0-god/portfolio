@@ -1,7 +1,7 @@
 ---
 layout: page
-title: code.GAP
-description: "Experimenting with GEMV acceleration — from CPU baselines to hardware co-design."
+title: code.ACE
+description: "AI/ML Accelerator Co-design Environment — from CPU baselines to hardware co-design."
 img: assets/img/12.jpg # 프로젝트 카드에 표시될 배경 이미지
 importance: 1
 category: Research
@@ -9,16 +9,16 @@ category: Research
 
 <div class="row">
     <div class="col-sm-12">
-        {% include figure.liquid loading="eager" path="assets/img/gap_overview.jpg" title="Project Overview Image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/ace_overview.jpg" title="Project Overview Image" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    A conceptual diagram of the code.GAP project, showing the progression from software kernels to an FPGA-based hardware accelerator. 
+    A conceptual diagram of the `code.ACE` project, showing the progression from software kernels to an FPGA-based hardware accelerator. 
     </div>
 
 ## **Overview**
 
-`code.GAP` is a **practice-oriented project** for exploring **GEMV (General Matrix-Vector Multiplication)** acceleration. It is designed both as a **learning companion for computer architecture courses** and as a **foundation for accelerator co-design experiments** involving quantization, sparsity, and custom hardware.
+`code.ACE` is a **practice-oriented project** for exploring **GEMV (General Matrix-Vector Multiplication)** acceleration through comprehensive **SW/HW co-design**. It is designed both as a **learning companion for computer architecture courses** and as a **foundation for accelerator co-design experiments** involving optimization techniques and custom hardware.
 
 The project focuses on:
 - Building a reproducible **software/hardware stack** for performance analysis based on the Roofline model.
@@ -27,29 +27,71 @@ The project focuses on:
 - Producing benchmarks and correctness tests for **portfolio and research use**.
 
 ---
-
-## **Layered Architecture**
+## Layered Architecture
 
 The project is designed around a "Contract"-based architecture to ensure a clean separation of concerns between layers. This modular design allows for independent development and testing of the tensor library, backend implementations, and GEMV algorithms.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/gap_architecture.jpg" title="Layered Architecture Diagram" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        <h3 class="mt-0">Core Layers</h3>
-        <ul>
-            <li><strong>Core:</strong> Defines the central contracts (data types, compute policies) and the abstract `IBackend` interface.</li>
-            <li><strong>Tensor:</strong> A user-friendly handle for managing data and metadata.</li>
-            <li><strong>Backend:</strong> A resource provider for memory operations and optional accelerated kernels (e.g., NEON, AVX, FPGA).</li>
-            <li><strong>Algorithm:</strong> The GEMV dispatcher that selects an appropriate backend or falls back to a reference software kernel.</li>
-        </ul>
+    <div class="col-sm-10 mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/ace_architecture.svg" title="Layered Architecture Diagram" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    A visual representation of the project's layered architecture, highlighting the separation between interfaces and implementations.
+    A visual representation of the project's layered architecture, highlighting the separation between interfaces and implementations for optimal SW/HW co-design.
 </div>
 
+---
+
+### `code.ACE` Architecture Details
+
+#### 1. User Facing Application Layer
+- **Code**: `src/app/main.cpp`
+- **Role**: The program's **entry point** and **overall orchestrator**.
+- **Description**: This is the only layer that interacts directly with the user. It parses command-line arguments (e.g., `--backend=hw.fpga`) to decide which technology to use. It requests the creation of a backend from the `Backend Factory`, creates `Tensor` objects to prepare data, and finally commands the `Algorithm Dispatch` to start the GEMV operation.
+
+---
+#### 2. Business Logic Layer (Algorithm)
+- **Role**: The **brain** of the project, responsible for the core logic and policy decisions of the GEMV operation.
+
+##### Internal Node: `Algorithm Dispatch`
+- **Code**: `src/alg/gemv_dispatch.cpp`
+- **Role**: A **middle manager** and **translator**.
+- **Description**: It receives high-level `Tensor` objects from the `Application`. Based on the information in these objects, it creates (**translates** into) a low-level, standardized work order (`GemvArgs`) that the `Backend` can understand. It then directs the `Backend` to perform the task via the `Backend Interface`. If the `Backend` reports that it cannot handle the task (by returning `false`), this component is also responsible for executing a **fallback** to a software kernel (e.g., `gemv_tiled.cpp`).
+
+---
+#### 3. Data Handle Layer
+- **Role**: Encapsulates the actual data and its **metadata** for safe and convenient management.
+
+##### Internal Node: `Tensor Data Structure`
+- **Code**: `include/tensor/tensor.hpp`
+- **Role**: A **safe 'handle'** to the data.
+- **Description**: The `Tensor` class does not allocate memory itself. Instead, it holds a pointer to a block of memory allocated by a `Backend`, along with its specifications (shape, stride). Its most critical role is managing the memory's lifecycle through the **RAII (Resource Acquisition Is Initialization)** pattern. When a `Tensor` object is destroyed, it automatically calls the `deleter` function it received from the `Backend`, fundamentally **preventing memory leaks**.
+
+---
+#### 4. Core Contracts and Interfaces
+- **Role**: The **'constitution'** of the project. It defines the fundamental rules and communication methods that all layers must adhere to.
+
+##### Internal Node: `Backend Interface`
+- **Code**: `include/core/backend.hpp` (the `IBackend` abstract class)
+- **Role**: The **master blueprint** that defines the **'qualifications'** for all backend implementations.
+- **Description**: It defines a list of functions (`allocate`, `deallocate`, `gemv`, etc.) that all backends must implement, using pure virtual functions. The `Algorithm` layer depends only on this interface, allowing it to request operations in the same way, regardless of whether the actual implementation is CPU or FPGA.
+
+##### Internal Node: `Data Types and Arguments`
+- **Code**: `include/core/types.hpp`
+- **Role**: The **'common dictionary'** used by all layers.
+- **Description**: It defines basic terms like `DType` (data type) and `MathOp` (math operation). It also defines the core communication tool between `Algorithm` and `Backend`: the **`GemvArgs`** struct. This allows them to exchange information smoothly without knowing each other's internal details.
+
+---
+#### 5. Backend Implementations Layer
+- **Role**: The **'specialist engineers'**. These are the concrete codes that perform the actual low-level work based on the `Core` layer's blueprint (`IBackend`).
+
+##### Internal Node: `CPU Scalar Backend`, etc.
+- **Code**: `src/backend/cpu_scalar/`, `src/backend/cpu_neon/`, `src/backend/hw_fpga/`, etc.
+- **Role**: **Implementations** of the `IBackend` interface.
+- **Description**:
+    - **`CPU Scalar`**: The **baseline** backend that implements the most basic functionality using only the standard C++ library.
+    - **`CPU Neon`**: An optimized backend that uses NEON SIMD technology for ARM processors to accelerate the `gemv` function.
+    - **`FPGA Hardware`**: A backend containing code that communicates with actual hardware. When its `gemv` function is called, it sends control signals to the FPGA via the AXI-Lite bus and transfers data via DMA.
 
 ---
 
@@ -74,23 +116,21 @@ The project is structured in four sequential phases, progressing from fundamenta
 ## **Build & Run**
 
 The project includes a simple build script and a command-line benchmark runner for standardized testing.
-
 Below is an example of running an INT8 benchmark with 2:4 structured sparsity.
 
-{% raw %}
+
 ```bash
 # Build the project (default: cpu.scalar backend)
 bash scripts/build.sh
 
 # Run an INT8 benchmark with 2:4 structured sparsity
-./build/gap_app --backend=cpu.scalar --kernel=sw.tiled \
+./build/ace_app --backend=cpu.scalar --kernel=sw.tiled \
     --dtype=i8 --math=Int8xInt8_To_Int32 --sparsity=block2_4 \
     --M=4096 --N=4096 --runs=30 --warmup=5
 ```
-{% endraw %}
 
 <div class="text-center mt-4">
-<a class="btn btn-primary btn-lg" href="https://github.com/code0-god/code.GAP" role="button" target="_blank">
+<a class="btn btn-primary btn-lg" href="https://github.com/code0-god/code.ACE" role="button" target="_blank">
 <i class="fab fa-github"></i> View on GitHub
 </a>
 </div>

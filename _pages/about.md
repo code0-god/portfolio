@@ -6,7 +6,7 @@ subtitle: Undergraduate Research Intern | Computer Architecture & AI Acceleratio
 
 profile:
   align: right
-  image: me.webp
+  image: me.jpg
   image_circular: false
   more_info: >
     <p> - 3rd Year, Electrical & Computer Engineering</p>
@@ -37,9 +37,8 @@ I've also initiated the **GAP (GEMV Accelerator Project)**, a personal research 
 ## **Research Interests & Learning Goals**
 
 - **Hardware/Software Co-design**: Understanding how to optimize AI workloads across the full stack
-- **Computer Architecture**: Exploring RISC-V ecosystems, systolic arrays, and memory hierarchies  
-- **ML Acceleration**: Learning about quantization, sparsity, and specialized computing architectures
-- **Edge AI Systems**: Investigating efficient deployment of neural networks on resource-constrained devices
+- **Computer Architecture**: Building a strong foundation through my coursework in Computer Organization, with the goal of exploring RISC ecosystems, systolic arrays, and memory hierarchies.
+- **ML Acceleration**: Learning the fundamental principles of specialized architectures, including key techniques like quantization and structured sparsity.
 
 ---
 
@@ -47,7 +46,7 @@ I've also initiated the **GAP (GEMV Accelerator Project)**, a personal research 
 
 - **Languages:** C/C++ (C++20), Python
 - **Core Concepts:** Computer Architecture, Dynamic DNNs, Low-Level Optimization, Performance Profiling
-- **Tools & Platforms:** llama.cpp/ggml, GDB, `perf`, CMake, Git, FPGA development (learning)
+- **Tools & Platforms:** VSCode, llama.cpp/ggml, GDB, Git, QEMU, FPGA development (learning)
 
 ---
 
