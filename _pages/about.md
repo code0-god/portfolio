@@ -30,7 +30,7 @@ This experience has convinced me that exploring custom accelerator design could 
 
 I'm currently working on **HW/SW optimization for Dynamic DNNs**, where I'm learning to port and optimize the **RISC-V Gemmini systolic array accelerator** within CPU-based runtimes like `llama.cpp`. This challenging project has taught me about the complexities of bridging specialized hardware and software frameworks through deep performance profiling and analysis.
 
-I've also initiated the **GAP (GEMV Accelerator Project)**, a personal research endeavor where I'm systematically exploring GEMV (General Matrix-Vector Multiplication) acceleration. Starting from baseline software kernels, I'm progressing through SIMD-optimized CPU backends toward a final hardware implementation of an **INT8 systolic array on an FPGA**.
+I've also initiated the **ACE (AI/ML Accelerator Co-design Environment)**, a personal research endeavor where I'm systematically exploring GEMV (General Matrix-Vector Multiplication) acceleration. Starting from baseline software kernels, I'm progressing through SIMD-optimized CPU backends toward a final hardware implementation of an **INT8 systolic array on an FPGA**.
 
 ---
 
@@ -38,7 +38,7 @@ I've also initiated the **GAP (GEMV Accelerator Project)**, a personal research 
 
 - **Hardware/Software Co-design**: Understanding how to optimize AI workloads across the full stack
 - **Computer Architecture**: Building a strong foundation through my coursework in Computer Organization, with the goal of exploring RISC ecosystems, systolic arrays, and memory hierarchies.
-- **ML Acceleration**: Learning the fundamental principles of specialized architectures, including key techniques like quantization and structured sparsity.
+- **AI/ML Acceleration**: Learning the fundamental principles of specialized architectures, including key techniques like quantization and structured sparsity.
 
 ---
 
