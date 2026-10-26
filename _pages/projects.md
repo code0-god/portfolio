@@ -2,10 +2,10 @@
 layout: page
 title: projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: Projects in computer architecture, AI acceleration, and hardware design.
 nav: true
 nav_order: 3
-display_categories: [Research, work, fun]
+display_categories: [Research]
 horizontal: false
 ---
 

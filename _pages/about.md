@@ -15,16 +15,22 @@ profile:
 
 news: false
 selected_papers: false
-social: true 
+social: true
 ---
 
 I'm a third-year undergraduate student at Ajou University, deeply fascinated by **computer architecture** and **AI acceleration**. As a research intern in the Embedded and AI Systems Laboratory, I'm exploring how **HW/SW co-design** can unlock the potential of deep learning systems on specialized hardware.
 
-My journey into this field began with Computer Systems Programming, where I became fascinated with the low-level world of how software commands orchestrate hardware. This experience sparked a deep interest in pushing performance to its limits at the hardware-software boundary. Now, as a research intern, my hands-on work in performance optimization has solidified that passion.   
+My journey into this field began with Computer Systems Programming, where I became fascinated with the low-level world of how software commands orchestrate hardware. This experience sparked a deep interest in pushing performance to its limits at the hardware-software boundary. Now, as a research intern, my hands-on work in performance optimization has solidified that passion.
 
 This experience has convinced me that exploring custom accelerator design could be key to achieving better system-level efficiency
 
+## code0.HDL
 
+code0.HDL is an interactive learning site for BSV, Verilog, and Chisel.
+It combines step-by-step lessons, runnable circuit examples, waveforms,
+and concept checks to help learners understand digital hardware.
+
+[Explore code0.HDL](https://hdl.code0.ai.kr/)
 
 ## **Current Research**
 
@@ -56,4 +62,4 @@ I'm planning to pursue graduate studies in computer architecture, with a focus o
 
 ---
 
-*I'm always eager to learn more and discuss research ideas. Feel free to reach out if you'd like to connect!*
+_I'm always eager to learn more and discuss research ideas. Feel free to reach out if you'd like to connect!_
