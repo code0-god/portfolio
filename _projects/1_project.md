@@ -7,15 +7,6 @@ importance: 1
 category: Research
 ---
 
-<div class="row">
-    <div class="col-sm-12">
-        {% include figure.liquid loading="eager" path="assets/img/ace_overview.jpg" title="Project Overview Image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    A conceptual diagram of the `code.ACE` project, showing the progression from software kernels to an FPGA-based hardware accelerator. 
-    </div>
-
 ## **Overview**
 
 `code.ACE` is a **practice-oriented project** for exploring **GEMV (General Matrix-Vector Multiplication)** acceleration through comprehensive **SW/HW co-design**. It is designed both as a **learning companion for computer architecture courses** and as a **foundation for accelerator co-design experiments** involving optimization techniques and custom hardware.
